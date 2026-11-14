@@ -1,0 +1,17 @@
+# Cisco Secure Access policy intent; not vendor-importable syntax.
+policies:
+  - name: managed-user-to-private-app
+    identity_group: Employees
+    posture: compliant
+    destination: approved-private-app
+    action: allow
+    logging: true
+  - name: unmanaged-to-private-app
+    posture: unmanaged
+    destination: approved-private-app
+    action: deny
+    logging: true
+  - name: internet-access
+    identity_group: Employees
+    destination: internet
+    action: inspect-according-to-approved-policy
