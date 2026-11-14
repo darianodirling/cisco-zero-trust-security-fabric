@@ -1,0 +1,9 @@
+# FMC/FTD policy intent only. Convert to version-specific objects and rules.
+policy: enterprise-segmentation
+default_action: block-with-logging
+rules:
+  - {name: employees-to-web, source_zone: employees, destination_zone: web, protocol: tcp, port: 443, action: allow}
+  - {name: app-to-database, source_zone: app, destination_zone: database, protocol: tcp, port: 5432, action: allow}
+  - {name: vpn-to-jump, source_zone: vpn, destination_zone: management, protocol: tcp, port: 443, action: allow}
+  - {name: guest-to-internal, source_zone: guest, destination_zone: internal, protocol: any, action: block}
+  - {name: user-to-database, source_zone: employees, destination_zone: database, protocol: any, action: block}
