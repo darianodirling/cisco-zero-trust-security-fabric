@@ -1,0 +1,16 @@
+# Policy intent only: translate to supported ISE policy sets using the UI/API.
+policy_set: campus-wired
+authentication:
+  protocols: [EAP-TLS]
+  identity_sources: [ActiveDirectory]
+authorization_rules:
+  - name: managed-employee
+    when: {certificate_valid: true, endpoint_compliant: true, group: Employees}
+    result: {access: permit, sgt: 10, vlan: 110}
+  - name: guest
+    when: {group: Guests}
+    result: {access: restricted, sgt: 30, vlan: 130}
+  - name: unknown-or-noncompliant
+    when: {any: true}
+    result: {access: quarantine, sgt: 99, vlan: 199}
+failure_mode: explicitly-approve-fail-closed-or-critical-auth
